@@ -46,10 +46,25 @@ server.post('/dogs/new', async (req, res) => {
 });
 
 // Update a dog already in the list
-server.put('/dogs/:id', async (req, res) => {});
+server.put('/dogs/:id', async (req, res) => {
+  // Helper
+  function changeName(id, name) {
+    for (let dog in Dogs) {
+      if (Dogs[dog].id == id) {
+        Dogs[dog].name = name;
+        break;
+      }
+    }
+  }
+
+  let updatedDogList = changeName(req.params.id, req.body.name);
+
+  res.json(updatedDogList);
+});
 
 // Remove a dog from the list :(
-erver.delete('/dogs/:id', async (req, res) => {
+server.delete('/dogs/:id', async (req, res) => {
+  // Helper
   function removeDog(array, id) {
     return array.filter(function(element) {
       return element != id;
